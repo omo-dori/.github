@@ -31,17 +31,17 @@ architecture-beta
     service n8n(server)[n8n] in home
 
     internet:R --> L:proxy
-    proxy:R -- L:j3
-    j3:T -- B:j2
-    j2:T -- B:j1
-    j3:B -- T:j4
-    j4:B -- T:j5
-    j5:B -- T:j6
-    j1:R --> L:opengym
-    j2:R --> L:artifacts
-    j3:R --> L:hub
-    j4:R --> L:bridge
-    j5:R --> L:vault
+    proxy:R -- L:j1
+    j1:R -- L:j2
+    j2:R -- L:j3
+    j3:R -- L:j4
+    j4:R -- L:j5
+    j5:R -- L:j6
+    j1:B --> T:opengym
+    j2:B --> T:artifacts
+    j3:B --> T:hub
+    j4:B --> T:bridge
+    j5:B --> T:vault
     j6:R --> L:wg
     wg:R -- L:h1
     h1:R --> L:ha
