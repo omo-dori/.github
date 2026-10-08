@@ -8,7 +8,7 @@
 
 ```mermaid
 flowchart TB
-    internet((Internet)) --> proxy
+    internet([Internet]) --> proxy
 
     subgraph oci [OCI edge · Coolify]
         proxy[Coolify proxy<br/>*.hongmono.com TLS]
@@ -25,9 +25,7 @@ flowchart TB
     end
 
     proxy --> opengym & artifacts & hub & bridge & vault
-    proxy -. WireGuard .-> ha & n8n
-    artifacts ~~~ ha
-    hub ~~~ n8n
+    oci -. WireGuard .-> home
 ```
 
 - 앱 저장소에 push하면 GitHub 웹훅으로 Coolify가 자동 배포한다.
