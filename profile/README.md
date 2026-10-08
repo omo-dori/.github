@@ -17,7 +17,7 @@ flowchart TB
         vault[(vaultwarden<br/>vault.)]
         paseo[Paseo Hub<br/>hub.]
         hermes[Hermes webhook<br/>hermes-webhook.]
-        clip[clipboard-hub<br/>tailnet only]
+        clip[device-bridge<br/>tailnet only]
         bridge[codex-usage-bridge<br/>tailnet only]
     end
 
@@ -42,7 +42,7 @@ flowchart TB
 | [opengym](https://github.com/omo-dori/opengym) | 운동 기록 앱 (AI 코치, 러닝 지도, Cloudflare D1) | Coolify · gym.hongmono.com |
 | [artifacts](https://github.com/omo-dori/artifacts) | HTML·인터랙티브 문서를 링크로 공유하는 Bun 서버 | Coolify · artifacts.hongmono.com |
 | [artifacts-content](https://github.com/omo-dori/artifacts-content) | artifacts에 올리는 페이지 원본 (업로드 API로 게시) | — |
-| [clipboard-hub](https://github.com/omo-dori/clipboard-hub) | 개인 클립보드·Galaxy 릴레이 허브 | Coolify · tailnet |
+| [device-bridge](https://github.com/omo-dori/device-bridge) | Mac↔Galaxy 클립보드 동기화·원격 명령 중계·기기 관리 허브 | Coolify · tailnet |
 | [codex-usage-bridge](https://github.com/omo-dori/codex-usage-bridge) | Codex·Claude Code 사용량을 Galaxy 위젯으로 | Coolify |
 | [omo-dori-mode-experimental](https://github.com/omo-dori/omo-dori-mode-experimental) | Dori 모드: 메신저로 일을 받아 코딩 에이전트 세션을 띄우고 관리 (공개, 실험) | — |
 | dori-memory | Dori 메모리 스냅샷 (비공개 백업) | — |
