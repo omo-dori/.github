@@ -27,7 +27,6 @@ architecture-beta
     group home(server)[Home LAN]
     service wg(internet)[WireGuard] in home
     junction h1 in home
-    junction h2 in home
     service ha(server)[Home Assistant] in home
     service n8n(server)[n8n] in home
 
@@ -46,8 +45,7 @@ architecture-beta
     j6:R --> L:wg
     wg:R -- L:h1
     h1:R --> L:ha
-    h1:B -- T:h2
-    h2:R --> L:n8n
+    h1:B --> T:n8n
 ```
 
 - 앱 저장소에 push하면 GitHub 웹훅으로 Coolify가 자동 배포한다.
