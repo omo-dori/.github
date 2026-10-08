@@ -9,7 +9,6 @@
 ```mermaid
 flowchart TB
     internet([Internet]) --> proxy
-    tailnet([Tailnet]) -.-> clip & bridge
 
     subgraph oci [OCI edge · Coolify]
         proxy[Coolify proxy<br/>*.hongmono.com TLS]
