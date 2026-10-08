@@ -11,9 +11,13 @@ architecture-beta
     service internet(internet)[Internet]
 
     group oci(cloud)[OCI edge]
-    service proxy(server)[Coolify proxy TLS] in oci
+    service proxy(server)[Coolify proxy] in oci
     junction j1 in oci
     junction j2 in oci
+    junction j3 in oci
+    junction j4 in oci
+    junction j5 in oci
+    junction j6 in oci
     service opengym(server)[opengym] in oci
     service artifacts(server)[artifacts] in oci
     service hub(server)[clipboard hub] in oci
@@ -22,20 +26,28 @@ architecture-beta
 
     group home(server)[Home LAN]
     service wg(internet)[WireGuard] in home
+    junction h1 in home
+    junction h2 in home
     service ha(server)[Home Assistant] in home
     service n8n(server)[n8n] in home
 
     internet:R --> L:proxy
-    proxy:R -- L:j1
-    j1:R -- L:j2
-    j1:T --> B:opengym
-    j1:B --> T:artifacts
-    j2:T --> B:hub
-    j2:B --> T:bridge
-    j2:R --> L:vault
-    proxy:B --> T:wg
-    wg:R --> L:ha
-    wg:B --> T:n8n
+    proxy:R -- L:j3
+    j3:T -- B:j2
+    j2:T -- B:j1
+    j3:B -- T:j4
+    j4:B -- T:j5
+    j5:B -- T:j6
+    j1:R --> L:opengym
+    j2:R --> L:artifacts
+    j3:R --> L:hub
+    j4:R --> L:bridge
+    j5:R --> L:vault
+    j6:R --> L:wg
+    wg:R -- L:h1
+    h1:R --> L:ha
+    h1:B -- T:h2
+    h2:R --> L:n8n
 ```
 
 - 앱 저장소에 push하면 GitHub 웹훅으로 Coolify가 자동 배포한다.
