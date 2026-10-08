@@ -6,10 +6,36 @@
 
 ## 인프라 (2026-10)
 
-```
-인터넷 ──▶ OCI 엣지 (Coolify + traefik, *.hongmono.com TLS)
-             ├─ Coolify 앱: opengym · artifacts · clipboard-hub · codex-usage-bridge · vaultwarden
-             └─ WireGuard ──▶ 홈 LAN: Home Assistant · n8n
+```mermaid
+architecture-beta
+    service internet(internet)[Internet]
+
+    group oci(cloud)[OCI edge]
+    service proxy(server)[Coolify proxy TLS] in oci
+    junction j1 in oci
+    junction j2 in oci
+    service opengym(server)[opengym] in oci
+    service artifacts(server)[artifacts] in oci
+    service hub(server)[clipboard hub] in oci
+    service bridge(server)[usage bridge] in oci
+    service vault(database)[vaultwarden] in oci
+
+    group home(server)[Home LAN]
+    service wg(internet)[WireGuard] in home
+    service ha(server)[Home Assistant] in home
+    service n8n(server)[n8n] in home
+
+    internet:R --> L:proxy
+    proxy:R -- L:j1
+    j1:R -- L:j2
+    j1:T --> B:opengym
+    j1:B --> T:artifacts
+    j2:T --> B:hub
+    j2:B --> T:bridge
+    j2:R --> L:vault
+    proxy:B --> T:wg
+    wg:R --> L:ha
+    wg:B --> T:n8n
 ```
 
 - 앱 저장소에 push하면 GitHub 웹훅으로 Coolify가 자동 배포한다.
