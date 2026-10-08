@@ -1,43 +1,34 @@
-# cloiworks
+<p align="center"><img src="https://github.com/omo-dori.png" width="96" alt="Dori"></p>
 
-정욱(@hongmono)의 개인 프로젝트와 홈서버 인프라를 관리하는 조직.
+# omo-dori
 
-## 🏗 인프라 (2026-06 현재)
+정욱(@hongmono)의 개인 프로젝트, 개인 서버, 그리고 상시 비서 에이전트 **Dori**가 쓰는 저장소를 모아 둔 조직.
+
+## 인프라 (2026-10)
 
 ```
-인터넷 ──▶ OCI 엣지(공인 IP, Traefik + WireGuard 허브)
-                 │  *.hongmono.com · Let's Encrypt TLS 종단
-                 │  WireGuard 터널 (10.10.0.0/24) + 홈LAN 라우팅
-                 ▼
-         홈 Proxmox ── k3s VM(10.10.0.4) ── HAOS VM
-                          │ k3s + ArgoCD (GitOps)
-                          ▼
-              tinyauth · n8n · homepage · recipe-book · 근태 CronJob
+인터넷 ──▶ OCI 엣지 (Coolify + traefik, *.hongmono.com TLS)
+             ├─ Coolify 앱: opengym · artifacts · clipboard-hub · codex-usage-bridge · vaultwarden
+             └─ WireGuard ──▶ 홈 LAN: Home Assistant · n8n
 ```
 
-- **엣지**: OCI 인스턴스. Traefik이 `*.hongmono.com`을 TLS 종단 후 WireGuard 너머 홈 서비스(NodePort)로 라우팅.
-- **컴퓨트**: 홈 Proxmox 위 k3s 단일노드 + **ArgoCD app-of-apps**. 모든 배포는 `cloiworks/gitops` repo 선언으로 일어남(GitOps).
-- **인증**: `tinyauth`(forward-auth)가 보호 서비스의 SSO 게이트.
-- **home-assistant**: Proxmox 별도 VM(HAOS).
+- 앱 저장소에 push하면 GitHub 웹훅으로 Coolify가 자동 배포한다.
+- 라우팅 기록과 엣지 운영 문서는 [gitops](https://github.com/omo-dori/gitops).
 
-## 📦 서비스 / 프로젝트
+## 저장소
 
-| repo | 설명 | 배포 |
-|------|------|------|
-| [gitops](https://github.com/cloiworks/gitops) | k3s + ArgoCD GitOps 선언(인프라의 단일 소스) | — |
-| [recipe-book](https://github.com/cloiworks/recipe-book) | 🍳 레시피북 (Rust API + 웹, SQLite + Cloudflare D1 백업) | k3s · recipe.hongmono.com |
-| [homepage](https://github.com/cloiworks/homepage) | 정적 홈페이지(nginx) | k3s · home.hongmono.com |
-| [sprite-studio](https://github.com/cloiworks/sprite-studio) | 스프라이트/스티커 생성 FastAPI | k3s(현재 보류) |
-| [winter_mario](https://github.com/cloiworks/winter_mario) | Next.js 미니게임 | — |
-| [folio_flow](https://github.com/cloiworks/folio_flow) | macOS 캡처·OCR 앱(Swift) | 로컬 앱 |
-| [lotto-purchase-action](https://github.com/cloiworks/lotto-purchase-action) | 로또 자동구매 GitHub Action(미러) | GitHub Action |
+| 저장소 | 설명 | 배포 |
+| --- | --- | --- |
+| [opengym](https://github.com/omo-dori/opengym) | 운동 기록 앱 (AI 코치, 러닝 지도, Cloudflare D1) | Coolify · gym.hongmono.com |
+| [artifacts](https://github.com/omo-dori/artifacts) | HTML·인터랙티브 문서를 링크로 공유하는 Bun 서버 | Coolify · artifacts.hongmono.com |
+| [artifacts-content](https://github.com/omo-dori/artifacts-content) | artifacts에 올리는 페이지 원본 (업로드 API로 게시) | — |
+| [clipboard-hub](https://github.com/omo-dori/clipboard-hub) | 개인 클립보드·Galaxy 릴레이 허브 | Coolify · tailnet |
+| [codex-usage-bridge](https://github.com/omo-dori/codex-usage-bridge) | Codex·Claude Code 사용량을 Galaxy 위젯으로 | Coolify |
+| [gitops](https://github.com/omo-dori/gitops) | 엣지 라우팅 기록과 운영 문서 | — |
+| [omo-dori-mode-experimental](https://github.com/omo-dori/omo-dori-mode-experimental) | Dori 모드: 메신저로 일을 받아 코딩 에이전트 세션을 띄우고 관리 (공개, 실험) | — |
+| dori-memory | Dori 메모리 스냅샷 (비공개 백업) | — |
 
-## 🛠 스택
+## Dori
 
-![Rust](https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![k3s](https://img.shields.io/badge/k3s-FFC61C?style=flat-square&logo=k3s&logoColor=black)
-![Argo CD](https://img.shields.io/badge/Argo%20CD-EF7B4D?style=flat-square&logo=argo&logoColor=white)
-![Traefik](https://img.shields.io/badge/Traefik-24A1C1?style=flat-square&logo=traefikproxy&logoColor=white)
-![WireGuard](https://img.shields.io/badge/WireGuard-88171A?style=flat-square&logo=wireguard&logoColor=white)
-![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white)
+텔레그램으로 요청을 받아 코딩 에이전트에게 일을 나눠 주고, 결과를 확인해서 보고하는 상시 비서 에이전트.
+만든 문서와 페이지는 [artifacts.hongmono.com](https://artifacts.hongmono.com)으로 전달한다.
