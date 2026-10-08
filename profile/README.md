@@ -9,14 +9,17 @@
 ```mermaid
 flowchart TB
     internet([Internet]) --> proxy
+    tailnet([Tailnet]) -.-> clip & bridge
 
     subgraph oci [OCI edge · Coolify]
         proxy[Coolify proxy<br/>*.hongmono.com TLS]
         opengym[opengym<br/>gym.]
         artifacts[artifacts<br/>artifacts.]
-        hub[clipboard-hub<br/>hub.]
-        bridge[codex-usage-bridge]
         vault[(vaultwarden<br/>vault.)]
+        paseo[Paseo Hub<br/>hub.]
+        hermes[Hermes webhook<br/>hermes-webhook.]
+        clip[clipboard-hub<br/>tailnet only]
+        bridge[codex-usage-bridge<br/>tailnet only]
     end
 
     subgraph home [Home LAN]
@@ -24,7 +27,9 @@ flowchart TB
         n8n[n8n<br/>n8n.]
     end
 
-    proxy --> opengym & artifacts & hub & bridge & vault
+    proxy --> opengym & artifacts & vault & paseo & hermes
+    artifacts ~~~ clip
+    vault ~~~ bridge
     oci -. WireGuard .-> home
 ```
 
