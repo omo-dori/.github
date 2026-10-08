@@ -7,45 +7,25 @@
 ## 인프라 (2026-10)
 
 ```mermaid
-architecture-beta
-    service internet(internet)[Internet]
+flowchart LR
+    internet((Internet)) --> proxy
 
-    group oci(cloud)[OCI edge]
-    service proxy(server)[Coolify proxy] in oci
-    junction j1 in oci
-    junction j2 in oci
-    junction j3 in oci
-    junction j4 in oci
-    junction j5 in oci
-    junction j6 in oci
-    service opengym(server)[opengym] in oci
-    service artifacts(server)[artifacts] in oci
-    service hub(server)[clipboard hub] in oci
-    service bridge(server)[usage bridge] in oci
-    service vault(database)[vaultwarden] in oci
+    subgraph oci [OCI edge · Coolify]
+        proxy[Coolify proxy<br/>*.hongmono.com TLS]
+        opengym[opengym<br/>gym.]
+        artifacts[artifacts<br/>artifacts.]
+        hub[clipboard-hub<br/>hub.]
+        bridge[codex-usage-bridge]
+        vault[(vaultwarden<br/>vault.)]
+    end
 
-    group home(server)[Home LAN]
-    service wg(internet)[WireGuard] in home
-    junction h1 in home
-    service ha(server)[Home Assistant] in home
-    service n8n(server)[n8n] in home
+    subgraph home [Home LAN]
+        ha[Home Assistant<br/>ha.]
+        n8n[n8n<br/>n8n.]
+    end
 
-    internet:R --> L:proxy
-    proxy:R -- L:j1
-    j1:R -- L:j2
-    j2:R -- L:j3
-    j3:R -- L:j4
-    j4:R -- L:j5
-    j5:R -- L:j6
-    j1:B --> T:opengym
-    j2:B --> T:artifacts
-    j3:B --> T:hub
-    j4:B --> T:bridge
-    j5:B --> T:vault
-    j6:R --> L:wg
-    wg:R -- L:h1
-    h1:R --> L:ha
-    h1:B --> T:n8n
+    proxy --> opengym & artifacts & hub & bridge & vault
+    proxy -. WireGuard .-> ha & n8n
 ```
 
 - 앱 저장소에 push하면 GitHub 웹훅으로 Coolify가 자동 배포한다.
