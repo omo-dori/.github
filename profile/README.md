@@ -13,7 +13,7 @@
 ```
 
 - 앱 저장소에 push하면 GitHub 웹훅으로 Coolify가 자동 배포한다.
-- 라우팅 기록과 엣지 운영 문서는 [gitops](https://github.com/omo-dori/gitops).
+- 라우팅 기록과 엣지 운영 문서는 [infra](https://github.com/omo-dori/infra).
 
 ## 저장소
 
@@ -24,7 +24,7 @@
 | [artifacts-content](https://github.com/omo-dori/artifacts-content) | artifacts에 올리는 페이지 원본 (업로드 API로 게시) | — |
 | [clipboard-hub](https://github.com/omo-dori/clipboard-hub) | 개인 클립보드·Galaxy 릴레이 허브 | Coolify · tailnet |
 | [codex-usage-bridge](https://github.com/omo-dori/codex-usage-bridge) | Codex·Claude Code 사용량을 Galaxy 위젯으로 | Coolify |
-| [gitops](https://github.com/omo-dori/gitops) | 엣지 라우팅 기록과 운영 문서 | — |
+| [infra](https://github.com/omo-dori/infra) | 엣지 라우팅 기록과 운영 문서 | — |
 | [omo-dori-mode-experimental](https://github.com/omo-dori/omo-dori-mode-experimental) | Dori 모드: 메신저로 일을 받아 코딩 에이전트 세션을 띄우고 관리 (공개, 실험) | — |
 | dori-memory | Dori 메모리 스냅샷 (비공개 백업) | — |
 
